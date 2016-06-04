@@ -16,6 +16,9 @@
 简单的概括一下，就是把多个dex文件塞入到app的classloader之中，但是android dex拆包方案中的类是没有重复的，如果classes.dex和classes1.dex中有重复的类，当用到这个重复的类的时候，系统会选择哪个类进行加载呢？
 
 > 让我们来看看类加载的代码：
+
+![](http://mmbiz.qpic.cn/mmbiz/0aYRVN1mAJwR6vqR4Yv6V3zIvjqmgdu75fv55IpLkDqm2MibiaVQNFMQ3xFNk9ez1CXPibFPn0ibiboQf2kWPfSL8Mg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+
 一个ClassLoader可以包含多个dex文件，每个dex文件是一个Element，多个dex文件排列成一个有序的数组dexElements，当找类的时候，会按顺序遍历dex文件，然后从当前遍历的dex文件中找类，如果找类则返回，如果找不到从下一个dex文件继续查找。
 
 理论上，如果在不同的dex中有相同的类存在，那么会优先选择排在前面的dex文件的类，如下图：
