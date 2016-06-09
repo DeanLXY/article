@@ -17,6 +17,7 @@ Realm Java 让你能够高效地编写 app 的模型层代码，保证你的数�
 ## Retrofit ##
 > <a href="retrofit">retrofit</a>
 
+网络请求框架
 * 效率非常高
 * 可以直接将结果转换称Java类
 * 主要是配合RxJava一起使用
