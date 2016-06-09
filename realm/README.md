@@ -73,3 +73,28 @@ Realm Java 让你能够高效地编写 app 的模型层代码，保证你的数�
 	    	managedDog.getAge();   // => 3 the dogs age is updated
 	    }
 	});
+
+
+## 注意:
+1. Auto-Updating Objects  
+RealmObject 是实时的、自动更新的底层数据的映射视图。你不需要去重新获得对象已取得其最新版本。对于数据的改动会即时反应到相关的对象或者查询结果。
+
+		final Dog myDog;
+		realm.executeTransaction(new Realm.Transaction() {
+		    @Override
+		    public void execute(Realm realm) {
+		        myDog = realm.createObject(Dog.class);
+		        myDog.setName("Fido");
+		        myDog.setAge(1);
+		    }
+		});
+		
+		realm.executeTransaction(new Realm.Transaction() {
+		    @Override
+		    public void execute(Realm realm) {
+		        Dog myPuppy = realm.where(Dog.class).equalTo("age", 1).findFirst();
+		        myPuppy.setAge(2);
+		    }
+		});
+	
+		myDog.getAge(); // => 2
