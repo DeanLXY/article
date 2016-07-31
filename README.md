@@ -29,3 +29,13 @@ Realm Java 让你能够高效地编写 app 的模型层代码，保证你的数�
 > <a href="todo-mvp">todo-mvp</a>
 
 框架介绍使用
+
+
+## MVP ##
+> <a href="GoogleAndroid-MVP">GoogleAndroid-MVP</a>
+
+mvp设计模式
+The Android framework offers a lot of flexibility when it comes to defining how
+to organize and <em>architect</em> an Android app. This freedom, whilst very valuable, can also result in apps
+with large classes, inconsistent naming and architectures (or lack of) that can
+make testing, maintaining and extending difficult.
