@@ -39,3 +39,9 @@ The Android framework offers a lot of flexibility when it comes to defining how
 to organize and <em>architect</em> an Android app. This freedom, whilst very valuable, can also result in apps
 with large classes, inconsistent naming and architectures (or lack of) that can
 make testing, maintaining and extending difficult.
+
+## Dalvik 可执行文件分包
+
+> <a href="Dalvik 可执行文件分包">multidex</a>
+
+当您的应用及其引用的库达到特定大小时。字节码文件内的代码方法引用总数会达到上限（单个dex方法引用上限为65536=64K）
