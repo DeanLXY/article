@@ -40,3 +40,7 @@ make testing, maintaining and extending difficult.
 # <a href="custome">仿照Twitter点赞效果</a>
 
 > 自定义控件
+
+# <a href="custome2">圆形转场动画</a>
+
+> 圆形转场动画，炒鸡简单
