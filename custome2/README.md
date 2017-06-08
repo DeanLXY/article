@@ -6,9 +6,9 @@
 
 ## screenShot
 
-![1](.\statics\1.png )
+![1](./statics/1.png)
 
-![1](.\statics\2.png )
+![1](./statics/2.png )
 
 ## How to use:
 
