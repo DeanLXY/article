@@ -1,15 +1,16 @@
-# <a href="/realm">Realm Java</a>
+## <a href="/realm">Realm Java</a>
 
 你需要知道的所有信息都在这里
 <https://realm.io/cn/docs/java/latest>
 
 Realm Java 让你能够高效地编写 app 的模型层代码，保证你的数据被安全、快速地存储
 
-# <a href="/hotfix">安卓App热补丁动态修复技术介绍</a>
+## <a href="/hotfix">安卓App热补丁动态修复技术介绍</a>
 
 当一个App发布之后，突然发现了一个严重bug需要进行紧急修复，这时候公司各方就会忙得焦头烂额：重新打包App、测试、向各个应用市场和渠道换包、提示用户升级、用户下载、覆盖安装。有时候仅仅是为了修改了一行代码，也要付出巨大的成本进行换包和重新发布。
 
-## <a href="retrofit">Retrofit</a> ##
+## <a href="retrofit">Retrofit</a>
+
 网络请求框架  
 
 * 效率非常高  
@@ -17,12 +18,12 @@ Realm Java 让你能够高效地编写 app 的模型层代码，保证你的数�
 * 主要是配合RxJava一起使用  
 
 
+## <a href="todo-mvp">TODOMVP</a>
 
-## <a href="todo-mvp">TODOMVP</a> ##
 框架介绍使用
 
+## <a href="GoogleAndroid-MVP">MVP</a>
 
-## <a href="GoogleAndroid-MVP">MVP</a> ##
 mvp设计模式
 The Android framework offers a lot of flexibility when it comes to defining how
 to organize and <em>architect</em> an Android app. This freedom, whilst very valuable, can also result in apps
@@ -37,10 +38,10 @@ make testing, maintaining and extending difficult.
 
 > 那些年SyncAdapter一起踩过的坑
 
-# <a href="custome">仿照Twitter点赞效果</a>
+## <a href="custome">仿照Twitter点赞效果</a>
 
 > 自定义控件
 
-# <a href="custome2">圆形转场动画</a>
+## <a href="custome2">圆形转场动画</a>
 
 > 圆形转场动画，炒鸡简单
