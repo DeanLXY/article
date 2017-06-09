@@ -6,7 +6,7 @@
 
 ## 效果演示
 
-![](.\statics\GIF.gif)
+![](./statics/GIF.gif)
 
 ## 示例代码
 
