@@ -32,7 +32,6 @@
         android:text="显示内容"
         android:textSize="22sp"/>
 </com.wangx.activityanim.CycleOpenLayout>
-
 ```
 
 1. 启动动画
@@ -67,7 +66,7 @@ layout.setCallBack(new CycleOpenLayout.CallBack() {
             }
 
             @Override
-            public void onStart() {
+            public void onStartComplete() {
 
             }
         });
@@ -92,6 +91,14 @@ layout.setCallBack(new CycleOpenLayout.CallBack() {
 ## 完整示例
 
 ```java
+
+/**
+ * @Author: xujie.wang
+ * @Email: xujie.wang@17zuoye.com
+ * @Date: 2017/6/8
+ * @Project: ActivityAnim
+ */
+
 public class CycleOpenLayout extends FrameLayout implements View.OnClickListener {
 
     public CallBack callBack;
@@ -101,7 +108,18 @@ public class CycleOpenLayout extends FrameLayout implements View.OnClickListener
     private float currentPercent;
     private float mCurrentRadius;
     private double mMaxRadius;
+    ValueAnimator.AnimatorUpdateListener startListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            currentPercent = animation.getAnimatedFraction();
+            mCurrentRadius = (float) (mMaxRadius * currentPercent);
+//            mCurrentRadius = Math.max(mMinRadius, mCurrentRadius);
+            invalidate();
+        }
+    };
     private ValueAnimator mAnimator;
+    private RectF contentOval;
+    private Path path;
 
     public CycleOpenLayout(@NonNull Context context) {
         super(context);
@@ -120,6 +138,8 @@ public class CycleOpenLayout extends FrameLayout implements View.OnClickListener
     private void init() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //        mPaint.setColor(Color.RED);
+        contentOval = new RectF();
+        path = new Path();
     }
 
     @Override
@@ -134,32 +154,49 @@ public class CycleOpenLayout extends FrameLayout implements View.OnClickListener
         double left = Math.sqrt(Math.pow(anchorX, 2) + Math.pow(anchorY, 2)) + 1;
         double right = Math.sqrt(Math.pow(w - anchorX, 2) + Math.pow(anchorY, 2)) + 1;
         mMaxRadius = Math.max(left, right);
+//        mMinRadius = anchorX;//Math.max(left, right);
         initShader();
     }
 
     private void initShader() {
         if (mBounds != null) {
-            LinearGradient linearGradient = new LinearGradient(0, 0, 0, mBounds.bottom, 0xffff0000, 0xff0000ff, Shader.TileMode.REPEAT);
+            LinearGradient linearGradient = new LinearGradient(0, 0, 0, mBounds.bottom, 0xffffffff, 0xffffffff, Shader.TileMode.REPEAT);
             mPaint.setShader(linearGradient);
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         if (currentPercent < 1) {
             canvas.drawCircle(mAnchor.x, mAnchor.y, mCurrentRadius, mPaint);
+//            canvas.clipRect(0, getMeasuredHeight()- mCurrentRadius, getMeasuredWi), mCurrentRadius);
+//            double y = Math.sqrt(Math.pow(mCurrentRadius, 2) - Math.pow(mAnchor.x, 2)) + 1;
+//            if (mCurrentRadius < mMinRadius) {
+            contentOval.set(mAnchor.x - mCurrentRadius,
+                    (int) (getMeasuredHeight() - mCurrentRadius),
+                    mAnchor.x + mCurrentRadius,
+                    (int) (getMeasuredHeight() + mCurrentRadius));
+//            }else{
+//                contentOval.set(mAnchor.x - mCurrentRadius,
+//                        (int) (getMeasuredHeight() - y),
+//                        mAnchor.x + mCurrentRadius,
+//                        (int) (getMeasuredHeight() + y));
+//
+//            }
+            path.reset();
+//            path = new Path();
+            double startAngle = Math.acos(mAnchor.x / mCurrentRadius) * 180 / Math.PI;
+            path.arcTo(contentOval, (float) (startAngle + 180f), (float) (360f - startAngle));
+            canvas.clipPath(path);
         } else {
             canvas.drawRect(mBounds, mPaint);
         }
-        super.onDraw(canvas);
     }
 
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if (currentPercent < 1) {
 
-            return true;
-        }
         return super.drawChild(canvas, child, drawingTime);
     }
 
@@ -169,6 +206,9 @@ public class CycleOpenLayout extends FrameLayout implements View.OnClickListener
     }
 
     public void exit() {
+        if (mAnimator == null || mAnimator.isRunning()) {
+            return;
+        }
 //        mAnimator.removeAllUpdateListeners();
         mAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -176,28 +216,28 @@ public class CycleOpenLayout extends FrameLayout implements View.OnClickListener
                 if (callBack != null) {
                     callBack.onEnd();
                 }
+                mAnimator.removeListener(this);
+                mAnimator.removeAllUpdateListeners();
             }
         });
         mAnimator.reverse();
     }
 
-
-    ValueAnimator.AnimatorUpdateListener startListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            currentPercent = animation.getAnimatedFraction();
-            mCurrentRadius = (float) (mMaxRadius * currentPercent);
-            invalidate();
-        }
-    };
     public void start() {
         mAnimator = ValueAnimator.ofInt(1);
-        mAnimator.setDuration(300);
+        mAnimator.setDuration(200);
         mAnimator.addUpdateListener(startListener);
+        mAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                if (callBack != null) {
+                    callBack.onStartComplete();
+                }
+                mAnimator.removeListener(this);
+            }
+        });
         mAnimator.start();
-        if (callBack != null) {
-            callBack.onStart();
-        }
     }
 
     public CallBack getCallBack() {
@@ -211,7 +251,7 @@ public class CycleOpenLayout extends FrameLayout implements View.OnClickListener
     public interface CallBack {
         void onEnd();
 
-        void onStart();
+        void onStartComplete();
     }
 }
 
