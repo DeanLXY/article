@@ -1,5 +1,15 @@
 # 点赞效果(仿Twitter)
 
+## 背景
+
+> 酷炫的点赞效果
+
+## 效果演示
+
+![](.\statics\GIF.gif)
+
+## 示例代码
+
 ```java
 package com.wangx.library;
 
