@@ -45,3 +45,12 @@ make testing, maintaining and extending difficult.
 ## <a href="custome2">圆形转场动画</a>
 
 > 圆形转场动画，炒鸡简单
+
+## <a href="gifview">GIFView</a>
+
+> 支持gif图片
+>
+> 令人向往的支持gif 的就一个核心对象  Movie
+>
+> 关键是这个类还是第一个版本就有的。Google大大不是说好的不要支持gif吗
+
