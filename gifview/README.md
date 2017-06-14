@@ -34,15 +34,21 @@
 
 1. 如果是api>=11
 
-`需要关闭硬件加速`
+> 需要关闭硬件加速
+
+```java
+setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+```
 
 2. 如果api level >=`JELLY_BEAN`
 
-可以使用`postInvalidateOnAnimation`请求绘制
+> 可以使用`postInvalidateOnAnimation`请求绘制
 
 3. 计算当前Movie时间方式
 
-`mCurrentAnimationTime = (int) ((now - mMovieStart) % dur);`
+```java
+mCurrentAnimationTime = (int) ((now - mMovieStart) % dur);
+```
 
-Note:dur为需要在多长时间内播放完成gif图
+> Note:dur为需要在多长时间内播放完成gif图
 
