@@ -54,3 +54,9 @@ make testing, maintaining and extending difficult.
 >
 > 关键是这个类还是第一个版本就有的。Google大大不是说好的不要支持gif吗
 
+## <a href="xhsemoticonskeyboard">xhsemoticonskeyboard图解</a>
+
+> 更平顺的emotions展开关闭
+>
+> 屏蔽当前Activity的焦点，获取键盘高度。设置functionLayout高度
+

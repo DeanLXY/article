@@ -1,1 +1,1 @@
-![](statics\xhsemoticonskeyboard.png)
+![](./statics/xhsemoticonskeyboard.png)
