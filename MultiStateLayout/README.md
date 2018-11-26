@@ -57,5 +57,94 @@ onCreateDrawableState方法的返回对象中体现
 如果是CheckedTextView相对TextView添加的state_checked状态，反而没那么复杂.如下
 ![](media/15432019927146/15432031184415.jpg)
 
+## 附件
+```
+    
+public class CheckableLayout extends LinearLayout implements Checkable {
+    private static
+    @StyleableRes
+    int[] sys_attrs = {
+            android.R.attr.background
+    };
+
+    private static final int[] STATE_ADD = {
+            android.R.attr.state_checked
+    };
+    private boolean mChecked;
+    private Drawable mDrawable;
+    private int[] mDefaultState;
+
+    public CheckableLayout(Context context) {
+        this(context, null);
+    }
+
+    public CheckableLayout(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public CheckableLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, sys_attrs);
+        mDrawable = typedArray.getDrawable(0);
+        if (mDrawable instanceof StateListDrawable) {
+            StateListDrawable stateListDrawable = (StateListDrawable) mDrawable;
+            mDefaultState = stateListDrawable.getState();
+        }
+        typedArray.recycle();
+    }
+
+    @Override
+    protected int[] onCreateDrawableState(int extraSpace) {
+        int[] state = super.onCreateDrawableState(extraSpace + 1);
+        if (mChecked) {
+            mergeDrawableStates(state, STATE_ADD);
+        }
+        return state;
+    }
+
+    @Override
+    public void setChecked(boolean checked) {
+        if (!isEnabled()) {
+            return;
+        }
+        if (mChecked == checked) {
+            return;
+        }
+        mChecked = checked;
+        refreshDrawableState();
+
+        int childCount = getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View view = getChildAt(i);
+            if (view instanceof Checkable) {
+                Checkable checkable = (Checkable) view;
+                checkable.setChecked(mChecked);
+            }
+        }
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        int childCount = getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View view = getChildAt(i);
+            view.setEnabled(enabled);
+        }
+    }
+
+    @Override
+    public boolean isChecked() {
+        return mChecked;
+    }
+
+    @Override
+    public void toggle() {
+        setChecked(!mChecked);
+    }
+}
+
+```
 
 
