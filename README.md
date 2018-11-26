@@ -60,3 +60,7 @@ make testing, maintaining and extending difficult.
 >
 > 屏蔽当前Activity的焦点，获取键盘高度。设置functionLayout高度
 
+## <a href="MultiStateLayout">实现多状态的组合控件</a>
+
+> 硬编码处理多状态样式，不存在的
+
